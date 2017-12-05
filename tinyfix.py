@@ -75,7 +75,7 @@ def start_page():
 def find_and_return(short_url):
     if flask.request.host.split(':')[0] != FQDN:
         return 'Unknown HOST header'
-
+    # TODO Compile regexp
     if not re.match('^[a-zA-Z0-9]{8}$', short_url):
         return 'Unknown URL format'
 
