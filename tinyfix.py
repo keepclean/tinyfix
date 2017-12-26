@@ -11,13 +11,14 @@ import wtforms
 
 etcd = etcd3.client()
 FQDN = 'localhost'
+SHORT_URL_RE = re.compile('^[-_a-zA-Z0-9]{4,8}$')
 
 
 def gen_hash():
-    hash_string = string.letters + string.digits
+    hash_string = '-_' + string.letters + string.digits
     random.seed(time.time())
 
-    return ''.join(random.choice(hash_string) for _ in xrange(8))
+    return ''.join(random.choice(hash_string) for _ in xrange(random.randint(4, 8)))
 
 
 def shorten(url):
@@ -75,8 +76,8 @@ def start_page():
 def find_and_return(short_url):
     if flask.request.host.split(':')[0] != FQDN:
         return 'Unknown HOST header'
-    # TODO Compile regexp
-    if not re.match('^[a-zA-Z0-9]{8}$', short_url):
+
+    if not SHORT_URL_RE(short_url):
         return 'Unknown URL format'
 
     full_url = unshorten(path=short_url)
