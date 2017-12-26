@@ -1,0 +1,26 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+"etcd3" = "*"
+flask = "*"
+wtforms = "*"
+
+
+[dev-packages]
+
+"flake8" = "*"
+ptpython = "*"
+"etcd3" = "*"
+flask = "*"
+wtforms = "*"
+
+
+[requires]
+
+python_version = "2.7"
