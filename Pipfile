@@ -10,6 +10,8 @@ name = "pypi"
 "etcd3" = "*"
 flask = "*"
 wtforms = "*"
+flask-socketio = "*"
+eventlet = "*"
 
 
 [dev-packages]
