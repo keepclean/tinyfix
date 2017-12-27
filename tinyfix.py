@@ -2,6 +2,7 @@
 
 import etcd3
 import flask
+import flask_socketio
 import hashlib
 import logging
 import random
@@ -20,6 +21,10 @@ logging.basicConfig(
     filename='tinyfix.log',
     level=logging.DEBUG,
 )
+
+app = flask.Flask(__name__)
+app.config['SECRET_KEY'] = ''.join(random.choice(HASH_STRING) for _ in xrange(48))
+socketio = flask_socketio.SocketIO(app)
 
 
 def count_hash(url):
@@ -73,12 +78,6 @@ def unshorten(path):
     return False if long_url is None else long_url
 
 
-DEBUG = True
-app = flask.Flask(__name__)
-app.config.from_object(__name__)
-app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
-
-
 class TinyFixUrlForm(wtforms.Form):
     max_length = 2048
     url = wtforms.TextField(
@@ -123,4 +122,4 @@ def find_and_return(short_url):
 
 
 if __name__ == '__main__':
-    app.run()
+    socketio.run(app)
